@@ -11,8 +11,14 @@ type ChatWindowProps = {
 };
 
 const ChatWindow = ({ friend, messages, isMinimized, onClose, onToggleMinimize }: ChatWindowProps) => {
+  const minimized = Boolean(isMinimized);
+
   return (
-    <div className="card flex h-[440px] w-80 flex-col overflow-hidden shadow-lg">
+    <div
+      className={`card flex w-80 flex-col overflow-hidden shadow-lg transition-[height] duration-200 ${
+        minimized ? 'h-[68px]' : 'h-[440px]'
+      }`}
+    >
       <div className="flex items-center justify-between bg-white px-3 py-2 shadow-sm">
         <div className="flex items-center gap-2">
           <Avatar user={friend} size="sm" showBadge />
@@ -40,7 +46,7 @@ const ChatWindow = ({ friend, messages, isMinimized, onClose, onToggleMinimize }
           </button>
         </div>
       </div>
-      {!isMinimized && (
+      {!minimized && (
         <>
           <div className="flex-1 space-y-2 overflow-y-auto bg-muted px-3 py-3">
             {messages.map((message) => (

@@ -19,7 +19,7 @@ const ChatWindowsBar = ({
   onOpenDefaultChat,
 }: ChatWindowsBarProps) => {
   return (
-    <div className="fixed bottom-4 left-1/2 z-30 flex w-full max-w-screen-2xl -translate-x-1/2 justify-end gap-3 px-3 sm:px-6">
+    <div className="fixed bottom-4 left-3 right-3 z-30 flex w-auto justify-start gap-3 sm:left-4 sm:right-4 md:right-[22rem]">
       <div className="hidden items-end gap-3 md:flex">
         {friends.map((friend) => (
           <ChatWindow

@@ -40,6 +40,102 @@ export const friends: Friend[] = [
     avatarUrl: 'https://i.pravatar.cc/150?img=33',
     isOnline: true,
     recentMessage: 'Up for coffee?'
+  },
+  {
+    id: 'f5',
+    name: 'Camila Chen',
+    handle: '@camila.chen',
+    avatarUrl: 'https://i.pravatar.cc/150?img=15',
+    isOnline: true,
+    recentMessage: 'Can you review the deck?'
+  },
+  {
+    id: 'f6',
+    name: 'Julian Park',
+    handle: '@julian.park',
+    avatarUrl: 'https://i.pravatar.cc/150?img=22',
+    isOnline: false,
+    recentMessage: 'Booking travel now.'
+  },
+  {
+    id: 'f7',
+    name: 'Amina Rahman',
+    handle: '@amina.rahman',
+    avatarUrl: 'https://i.pravatar.cc/150?img=40',
+    isOnline: true,
+    recentMessage: 'Let’s pair after lunch.'
+  },
+  {
+    id: 'f8',
+    name: 'Mateo Rossi',
+    handle: '@mateo.rossi',
+    avatarUrl: 'https://i.pravatar.cc/150?img=50',
+    isOnline: true,
+    recentMessage: 'Draft sent over.'
+  },
+  {
+    id: 'f9',
+    name: 'Isabella Moretti',
+    handle: '@isabella.moretti',
+    avatarUrl: 'https://i.pravatar.cc/150?img=24',
+    isOnline: false,
+    recentMessage: 'Are we still on for 3pm?'
+  },
+  {
+    id: 'f10',
+    name: 'Kai Nakamura',
+    handle: '@kai.nakamura',
+    avatarUrl: 'https://i.pravatar.cc/150?img=28',
+    isOnline: true,
+    recentMessage: 'Shared the assets.'
+  },
+  {
+    id: 'f11',
+    name: 'Nora Becker',
+    handle: '@nora.becker',
+    avatarUrl: 'https://i.pravatar.cc/150?img=44',
+    isOnline: false,
+    recentMessage: 'This color palette works!'
+  },
+  {
+    id: 'f12',
+    name: 'Diego Alvarez',
+    handle: '@diego.alvarez',
+    avatarUrl: 'https://i.pravatar.cc/150?img=7',
+    isOnline: true,
+    recentMessage: 'Ship it today?'
+  },
+  {
+    id: 'f13',
+    name: 'Sara Müller',
+    handle: '@sara.muller',
+    avatarUrl: 'https://i.pravatar.cc/150?img=14',
+    isOnline: true,
+    recentMessage: 'Sent you the recordings.'
+  },
+  {
+    id: 'f14',
+    name: 'Omar Faris',
+    handle: '@omar.faris',
+    avatarUrl: 'https://i.pravatar.cc/150?img=30',
+    isOnline: false,
+    recentMessage: 'Need a quick approval.'
+  },
+  {
+    id: 'f15',
+    name: 'Yara Ibrahim',
+    handle: '@yara.ibrahim',
+    avatarUrl: 'https://i.pravatar.cc/150?img=36',
+    isOnline: true,
+    recentMessage: 'Call me when free.'
+  },
+  {
+    id: 'f16',
+    name: 'Leo Martins',
+    handle: '@leo.martins',
+    avatarUrl: 'https://i.pravatar.cc/150?img=52',
+    isOnline: true,
+    recentMessage: 'New mockups ready.'
   }
 ];
 
