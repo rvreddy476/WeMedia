@@ -40,3 +40,18 @@ a {
 .muted-block {
   @apply bg-muted text-slate-700;
 }
+
+.chat-pop {
+  animation: chat-slide-up 220ms ease-out;
+}
+
+@keyframes chat-slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(14px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

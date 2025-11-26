@@ -6,17 +6,25 @@ import { useMemo, useState } from 'react';
 import { Friend } from './data/types';
 
 function App() {
-  const [openChatIds, setOpenChatIds] = useState<string[]>(friends.length ? [friends[0].id] : []);
+  const [openChatIds, setOpenChatIds] = useState<string[]>([]);
   const [minimizedChatIds, setMinimizedChatIds] = useState<string[]>([]);
 
   const openChatFriends: Friend[] = useMemo(
-    () => friends.filter((friend) => openChatIds.includes(friend.id)),
-    [friends, openChatIds],
+    () =>
+      openChatIds
+        .map((id) => friends.find((friend) => friend.id === id))
+        .filter(Boolean) as Friend[],
+    [openChatIds],
   );
 
   const handleOpenChat = (friendId: string) => {
-    setOpenChatIds((prev) => (prev.includes(friendId) ? prev : [...prev, friendId]));
-    setMinimizedChatIds((prev) => prev.filter((id) => id !== friendId));
+    setOpenChatIds((prev) => {
+      const withoutExisting = prev.filter((id) => id !== friendId);
+      const updated = [...withoutExisting, friendId];
+      const limited = updated.slice(-2);
+      setMinimizedChatIds((minimized) => minimized.filter((id) => limited.includes(id)));
+      return limited;
+    });
   };
 
   const handleCloseChat = (friendId: string) => {

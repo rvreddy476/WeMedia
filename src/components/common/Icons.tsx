@@ -44,10 +44,24 @@ export const ExploreIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+export const PostIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} {...props}>
+    <rect x="4" y="5" width="16" height="14" rx="3" ry="3" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v8m-4-4h8" />
+  </svg>
+);
+
 export const ReelsIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} {...props}>
     <rect x="3" y="5" width="18" height="14" rx="3" ry="3" />
     <path strokeLinecap="round" strokeLinejoin="round" d="M3 10h18M9 5v14M15 5v14" />
+  </svg>
+);
+
+export const TvIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} {...props}>
+    <rect x="3" y="5" width="18" height="13" rx="3" ry="3" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M8 18l-2 3m10-3l2 3M9 10h6v5H9z" />
   </svg>
 );
 

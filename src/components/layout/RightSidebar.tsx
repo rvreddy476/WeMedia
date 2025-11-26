@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { SparklesIcon, SearchIcon } from '../common/Icons';
+import { SearchIcon } from '../common/Icons';
 import { Friend } from '../../data/types';
 import Avatar from '../common/Avatar';
 
@@ -28,30 +28,8 @@ const RightSidebar = ({ friends, onSelectFriend }: RightSidebarProps) => {
   );
 
   return (
-    <aside className="hidden h-[calc(100vh-76px)] w-80 flex-shrink-0 flex-col gap-2 overflow-hidden px-2 pb-4 pt-0 xl:sticky xl:top-[76px] xl:flex">
-      <div className="card p-4">
-        <div className="flex items-start justify-between">
-          <div>
-            <p className="text-xs font-semibold text-slate-900">Promoted</p>
-            <p className="text-xs text-slate-500">Fresh drops curated for you</p>
-          </div>
-          <SparklesIcon className="h-4 w-4 text-amber-500" />
-        </div>
-        <div className="mt-3">
-          <div className="rounded-lg bg-gradient-to-br from-slate-900 to-slate-700 p-3 text-white shadow-soft">
-            <p className="text-[10px] uppercase tracking-wide text-slate-200">Sponsored</p>
-            <p className="mt-1 text-base font-semibold leading-tight">Minimalist gear for creators</p>
-            <p className="mt-1 text-xs text-slate-200 leading-snug">
-              Build your desk setup with neutral accessories and smart lighting.
-            </p>
-            <button className="mt-3 rounded-full bg-white/10 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur transition hover:bg-white/20">
-              Shop the edit
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div className="card flex min-h-[460px] flex-1 flex-col p-4">
+    <aside className="hidden h-[calc(100vh-76px)] w-80 flex-shrink-0 flex-col overflow-hidden px-2 pb-4 pt-0 xl:sticky xl:top-[76px] xl:flex">
+      <div className="card flex h-full flex-col p-4">
         <div className="space-y-3">
           <div className="flex items-center justify-between px-1">
             <p className="text-sm font-semibold text-slate-900">Contacts</p>

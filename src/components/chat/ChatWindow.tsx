@@ -8,16 +8,18 @@ type ChatWindowProps = {
   isMinimized?: boolean;
   onClose?: () => void;
   onToggleMinimize?: () => void;
+  order?: number;
 };
 
-const ChatWindow = ({ friend, messages, isMinimized, onClose, onToggleMinimize }: ChatWindowProps) => {
+const ChatWindow = ({ friend, messages, isMinimized, onClose, onToggleMinimize, order = 0 }: ChatWindowProps) => {
   const minimized = Boolean(isMinimized);
 
   return (
     <div
-      className={`card flex w-80 flex-col overflow-hidden shadow-lg transition-[height] duration-200 ${
+      className={`chat-pop card flex w-80 flex-col overflow-hidden shadow-lg transition-[height] duration-200 ${
         minimized ? 'h-[68px]' : 'h-[440px]'
       }`}
+      style={{ animationDelay: `${Math.min(order, 3) * 60}ms` }}
     >
       <div className="flex items-center justify-between bg-white px-3 py-2 shadow-sm">
         <div className="flex items-center gap-2">

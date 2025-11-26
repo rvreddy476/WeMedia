@@ -1,4 +1,4 @@
-import { BellIcon, ChatIcon, SearchIcon } from '../common/Icons';
+import { BellIcon, ChatIcon, PostIcon, ReelsIcon, SearchIcon, TvIcon } from '../common/Icons';
 import Avatar from '../common/Avatar';
 import { User } from '../../data/types';
 
@@ -20,13 +20,26 @@ const Header = ({ user }: HeaderProps) => {
           </div>
         </div>
 
-        <div className="hidden flex-1 items-center justify-center px-8 lg:flex">
-          <div className="flex w-full max-w-2xl items-center gap-3 rounded-full border border-slate-200 bg-white px-4 py-2 shadow-soft">
-            <SearchIcon className="h-5 w-5 text-slate-400" />
-            <input
-              className="w-full border-none bg-transparent text-sm outline-none placeholder:text-slate-400"
-              placeholder="Search creators, posts, or topics"
-            />
+        <div className="hidden flex-1 items-center justify-center px-6 lg:flex">
+          <div className="flex w-full max-w-xl items-center gap-3">
+            <div className="flex flex-1 items-center gap-3 rounded-full border border-slate-200 bg-white px-3 py-2 shadow-soft">
+              <SearchIcon className="h-5 w-5 text-slate-400" />
+              <input
+                className="w-full border-none bg-transparent text-sm outline-none placeholder:text-slate-400"
+                placeholder="Search creators, posts, or topics"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <button className="rounded-full border border-slate-200 bg-white p-2 shadow-soft transition hover:-translate-y-0.5">
+                <PostIcon className="h-5 w-5 text-slate-700" />
+              </button>
+              <button className="rounded-full border border-slate-200 bg-white p-2 shadow-soft transition hover:-translate-y-0.5">
+                <ReelsIcon className="h-5 w-5 text-slate-700" />
+              </button>
+              <button className="rounded-full border border-slate-200 bg-white p-2 shadow-soft transition hover:-translate-y-0.5">
+                <TvIcon className="h-5 w-5 text-slate-700" />
+              </button>
+            </div>
           </div>
         </div>
 
