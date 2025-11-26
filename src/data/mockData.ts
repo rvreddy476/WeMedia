@@ -1,4 +1,4 @@
-import { ChatMessage, Friend, Post, User } from './types';
+import { ChatMessage, Friend, Post, Story, User } from './types';
 
 export const currentUser: User = {
   id: 'u1',
@@ -207,5 +207,57 @@ export const chatMessages: ChatMessage[] = [
     from: friends[0],
     content: 'Awesome, ping me if you need QA.',
     time: '09:23',
+  },
+];
+
+export const stories: Story[] = [
+  {
+    id: 's1',
+    name: 'Vootukuri Sirisha',
+    avatarUrl: 'https://i.pravatar.cc/150?img=19',
+    imageUrl: 'https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=600&q=80',
+  },
+  {
+    id: 's2',
+    name: 'Vishwanadhan Murthy',
+    avatarUrl: 'https://i.pravatar.cc/150?img=45',
+    imageUrl: 'https://images.unsplash.com/photo-1545239351-46b87c1b921a?auto=format&fit=crop&w=600&q=80',
+  },
+  {
+    id: 's3',
+    name: 'Yellareddy Charan',
+    avatarUrl: 'https://i.pravatar.cc/150?img=8',
+    imageUrl: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80',
+    badge: 'Birthday',
+  },
+  {
+    id: 's4',
+    name: 'Sandeep Pulijala',
+    avatarUrl: 'https://i.pravatar.cc/150?img=38',
+    imageUrl: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=80',
+  },
+  {
+    id: 's5',
+    name: 'Haider Al-Abadi',
+    avatarUrl: 'https://i.pravatar.cc/150?img=54',
+    imageUrl: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=600&q=80',
+  },
+  {
+    id: 's6',
+    name: 'Zaheeruddin Mohmmed',
+    avatarUrl: 'https://i.pravatar.cc/150?img=17',
+    imageUrl: 'https://images.unsplash.com/photo-1523419400524-fc1a4466e7b0?auto=format&fit=crop&w=600&q=80',
+  },
+  {
+    id: 's7',
+    name: 'Lena Ortiz',
+    avatarUrl: 'https://i.pravatar.cc/150?img=48',
+    imageUrl: 'https://images.unsplash.com/photo-1498579687545-85a797598090?auto=format&fit=crop&w=600&q=80',
+  },
+  {
+    id: 's8',
+    name: 'Ethan Wells',
+    avatarUrl: 'https://i.pravatar.cc/150?img=12',
+    imageUrl: 'https://images.unsplash.com/photo-1521747116042-5a810fda9664?auto=format&fit=crop&w=600&q=80',
   },
 ];

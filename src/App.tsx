@@ -1,7 +1,7 @@
 import Header from './components/layout/Header';
 import MainLayout from './components/layout/MainLayout';
 import ChatWindowsBar from './components/chat/ChatWindowsBar';
-import { chatMessages, currentUser, friends, posts } from './data/mockData';
+import { chatMessages, currentUser, friends, posts, stories } from './data/mockData';
 import { useMemo, useState } from 'react';
 import { Friend } from './data/types';
 import PostComposerModal from './components/feed/PostComposerModal';
@@ -43,7 +43,13 @@ function App() {
   return (
     <div className="min-h-screen bg-background text-slate-900">
       <Header user={currentUser} onOpenComposer={() => setIsPostComposerOpen(true)} />
-      <MainLayout user={currentUser} friends={friends} posts={posts} onFriendSelect={handleOpenChat} />
+      <MainLayout
+        user={currentUser}
+        friends={friends}
+        posts={posts}
+        stories={stories}
+        onFriendSelect={handleOpenChat}
+      />
       <ChatWindowsBar
         friends={openChatFriends}
         minimizedChatIds={minimizedChatIds}

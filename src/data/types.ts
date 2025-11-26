@@ -28,3 +28,11 @@ export type ChatMessage = {
   content: string;
   time: string;
 };
+
+export type Story = {
+  id: string;
+  name: string;
+  avatarUrl: string;
+  imageUrl: string;
+  badge?: string;
+};
