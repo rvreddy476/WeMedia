@@ -12,6 +12,7 @@ export const friends: Friend[] = [
   {
     id: 'f1',
     name: 'Ethan Wells',
+    handle: '@ethan.we lls',
     avatarUrl: 'https://i.pravatar.cc/150?img=12',
     isOnline: true,
     recentMessage: 'Let’s sync tomorrow?'
@@ -19,6 +20,7 @@ export const friends: Friend[] = [
   {
     id: 'f2',
     name: 'Lena Ortiz',
+    handle: '@lena.ortiz',
     avatarUrl: 'https://i.pravatar.cc/150?img=48',
     isOnline: true,
     recentMessage: 'Loved your latest post!'
@@ -26,6 +28,7 @@ export const friends: Friend[] = [
   {
     id: 'f3',
     name: 'Noah Carter',
+    handle: '@noah.carter',
     avatarUrl: 'https://i.pravatar.cc/150?img=18',
     isOnline: false,
     recentMessage: 'Sent over the files.'
@@ -33,6 +36,7 @@ export const friends: Friend[] = [
   {
     id: 'f4',
     name: 'Priya Singh',
+    handle: '@priya.singh',
     avatarUrl: 'https://i.pravatar.cc/150?img=33',
     isOnline: true,
     recentMessage: 'Up for coffee?'

@@ -17,10 +17,7 @@ export type Post = {
   imageUrl?: string;
 };
 
-export type Friend = {
-  id: string;
-  name: string;
-  avatarUrl: string;
+export type Friend = User & {
   isOnline: boolean;
   recentMessage?: string;
 };
