@@ -4,9 +4,10 @@ import { User } from '../../data/types';
 
 type HeaderProps = {
   user: User;
+  onOpenComposer: () => void;
 };
 
-const Header = ({ user }: HeaderProps) => {
+const Header = ({ user, onOpenComposer }: HeaderProps) => {
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/80 backdrop-blur">
       <div className="mx-auto flex max-w-screen-2xl items-center justify-between px-6 py-4">
@@ -30,13 +31,26 @@ const Header = ({ user }: HeaderProps) => {
               />
             </div>
             <div className="flex items-center gap-2">
-              <button className="rounded-full border border-slate-200 bg-white p-2 shadow-soft transition hover:-translate-y-0.5">
+              <button
+                className="rounded-full border border-slate-200 bg-white p-2 shadow-soft transition hover:-translate-y-0.5"
+                title="Create post"
+                aria-label="Create post"
+                onClick={onOpenComposer}
+              >
                 <PostIcon className="h-5 w-5 text-slate-700" />
               </button>
-              <button className="rounded-full border border-slate-200 bg-white p-2 shadow-soft transition hover:-translate-y-0.5">
+              <button
+                className="rounded-full border border-slate-200 bg-white p-2 shadow-soft transition hover:-translate-y-0.5"
+                title="Reels"
+                aria-label="Reels"
+              >
                 <ReelsIcon className="h-5 w-5 text-slate-700" />
               </button>
-              <button className="rounded-full border border-slate-200 bg-white p-2 shadow-soft transition hover:-translate-y-0.5">
+              <button
+                className="rounded-full border border-slate-200 bg-white p-2 shadow-soft transition hover:-translate-y-0.5"
+                title="TV"
+                aria-label="TV"
+              >
                 <TvIcon className="h-5 w-5 text-slate-700" />
               </button>
             </div>
@@ -44,11 +58,19 @@ const Header = ({ user }: HeaderProps) => {
         </div>
 
         <div className="flex items-center gap-4">
-          <button className="relative rounded-full border border-slate-200 bg-white p-2 shadow-soft transition hover:-translate-y-0.5">
+          <button
+            className="relative rounded-full border border-slate-200 bg-white p-2 shadow-soft transition hover:-translate-y-0.5"
+            title="Notifications"
+            aria-label="Notifications"
+          >
             <BellIcon className="h-5 w-5 text-slate-700" />
             <span className="absolute right-1 top-1 h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
           </button>
-          <button className="rounded-full border border-slate-200 bg-white p-2 shadow-soft transition hover:-translate-y-0.5">
+          <button
+            className="rounded-full border border-slate-200 bg-white p-2 shadow-soft transition hover:-translate-y-0.5"
+            title="Messages"
+            aria-label="Messages"
+          >
             <ChatIcon className="h-5 w-5 text-slate-700" />
           </button>
           <div className="hidden sm:block">

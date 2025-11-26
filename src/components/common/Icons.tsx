@@ -109,6 +109,23 @@ export const VideoIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+export const PollIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} {...props}>
+    <rect x="4" y="5" width="4" height="14" rx="1.5" />
+    <rect x="10" y="3" width="4" height="16" rx="1.5" />
+    <rect x="16" y="8" width="4" height="11" rx="1.5" />
+  </svg>
+);
+
+export const EventIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} {...props}>
+    <rect x="3" y="5" width="18" height="16" rx="3" ry="3" />
+    <path strokeLinecap="round" strokeLinejoin="round" d="M3 10h18M8 3v4M16 3v4" />
+    <rect x="7" y="12" width="4" height="4" rx="1" />
+    <rect x="13" y="15" width="4" height="4" rx="1" />
+  </svg>
+);
+
 export const PhoneIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} {...props}>
     <path

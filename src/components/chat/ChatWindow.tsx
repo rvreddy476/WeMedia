@@ -30,20 +30,21 @@ const ChatWindow = ({ friend, messages, isMinimized, onClose, onToggleMinimize, 
           </div>
         </div>
         <div className="flex items-center gap-1">
-          <button className="rounded-full p-1 hover:bg-muted" aria-label="Start voice call">
+          <button className="rounded-full p-1 hover:bg-muted" aria-label="Start voice call" title="Voice call">
             <PhoneIcon className="h-5 w-5 text-slate-500" />
           </button>
-          <button className="rounded-full p-1 hover:bg-muted" aria-label="Start video call">
+          <button className="rounded-full p-1 hover:bg-muted" aria-label="Start video call" title="Video call">
             <VideoIcon className="h-5 w-5 text-slate-500" />
           </button>
           <button
             className="rounded-full p-1 hover:bg-muted"
             aria-label={isMinimized ? 'Expand chat' : 'Minimize chat'}
+            title={isMinimized ? 'Expand chat' : 'Minimize chat'}
             onClick={onToggleMinimize}
           >
             <MinimizeIcon className="h-5 w-5 text-slate-500" />
           </button>
-          <button className="rounded-full p-1 hover:bg-muted" aria-label="Close chat" onClick={onClose}>
+          <button className="rounded-full p-1 hover:bg-muted" aria-label="Close chat" title="Close chat" onClick={onClose}>
             <CloseIcon className="h-5 w-5 text-slate-500" />
           </button>
         </div>

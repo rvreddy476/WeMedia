@@ -4,10 +4,12 @@ import ChatWindowsBar from './components/chat/ChatWindowsBar';
 import { chatMessages, currentUser, friends, posts } from './data/mockData';
 import { useMemo, useState } from 'react';
 import { Friend } from './data/types';
+import PostComposerModal from './components/feed/PostComposerModal';
 
 function App() {
   const [openChatIds, setOpenChatIds] = useState<string[]>([]);
   const [minimizedChatIds, setMinimizedChatIds] = useState<string[]>([]);
+  const [isPostComposerOpen, setIsPostComposerOpen] = useState<boolean>(false);
 
   const openChatFriends: Friend[] = useMemo(
     () =>
@@ -40,7 +42,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-background text-slate-900">
-      <Header user={currentUser} />
+      <Header user={currentUser} onOpenComposer={() => setIsPostComposerOpen(true)} />
       <MainLayout user={currentUser} friends={friends} posts={posts} onFriendSelect={handleOpenChat} />
       <ChatWindowsBar
         friends={openChatFriends}
@@ -50,6 +52,7 @@ function App() {
         onToggleMinimize={handleToggleMinimize}
         onOpenDefaultChat={() => (friends[0] ? handleOpenChat(friends[0].id) : null)}
       />
+      <PostComposerModal user={currentUser} isOpen={isPostComposerOpen} onClose={() => setIsPostComposerOpen(false)} />
     </div>
   );
 }
