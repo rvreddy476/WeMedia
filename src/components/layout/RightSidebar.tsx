@@ -4,11 +4,12 @@ import Avatar from '../common/Avatar';
 
 type RightSidebarProps = {
   friends: Friend[];
+  onSelectFriend?: (friend: Friend) => void;
 };
 
-const RightSidebar = ({ friends }: RightSidebarProps) => {
+const RightSidebar = ({ friends, onSelectFriend }: RightSidebarProps) => {
   return (
-    <aside className="hidden h-[calc(100vh-76px)] w-80 flex-shrink-0 flex-col gap-4 overflow-y-auto px-2 pb-6 pt-4 xl:flex">
+    <aside className="hidden h-[calc(100vh-76px)] w-80 flex-shrink-0 flex-col gap-4 overflow-hidden px-2 pb-6 pt-0 xl:flex">
       <div className="card p-5">
         <div className="flex items-start justify-between">
           <div>
@@ -31,27 +32,34 @@ const RightSidebar = ({ friends }: RightSidebarProps) => {
         </div>
       </div>
 
-      <div className="card p-4">
+      <div className="card flex h-full min-h-[360px] flex-col p-4">
         <div className="flex items-center justify-between px-1">
           <p className="text-sm font-semibold text-slate-900">Chats</p>
           <button className="text-xs font-medium text-slate-500 hover:text-slate-800">See all</button>
         </div>
-        <ul className="mt-3 space-y-2">
-          {friends.map((friend) => (
-            <li key={friend.id} className="flex items-center justify-between rounded-xl px-2 py-2 hover:bg-muted">
-              <div className="flex items-center gap-3">
-                <div className="relative">
-                  <Avatar user={friend} size="sm" showBadge={friend.isOnline} />
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-slate-900">{friend.name}</p>
-                  <p className="text-xs text-slate-500">{friend.recentMessage}</p>
-                </div>
-              </div>
-              <span className={`h-2 w-2 rounded-full ${friend.isOnline ? 'bg-emerald-500' : 'bg-slate-300'}`}></span>
-            </li>
-          ))}
-        </ul>
+        <div className="mt-3 flex-1 overflow-y-auto pr-1">
+          <ul className="space-y-2">
+            {friends.map((friend) => (
+              <li key={friend.id}>
+                <button
+                  className="flex w-full items-center justify-between rounded-xl px-2 py-2 text-left transition hover:bg-muted"
+                  onClick={() => onSelectFriend?.(friend)}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="relative">
+                      <Avatar user={friend} size="sm" showBadge={friend.isOnline} />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-semibold text-slate-900">{friend.name}</p>
+                      <p className="truncate text-xs text-slate-500">{friend.recentMessage}</p>
+                    </div>
+                  </div>
+                  <span className={`h-2 w-2 flex-shrink-0 rounded-full ${friend.isOnline ? 'bg-emerald-500' : 'bg-slate-300'}`}></span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </aside>
   );

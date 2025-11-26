@@ -95,6 +95,16 @@ export const VideoIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+export const PhoneIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} {...props}>
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M5 4h4l2 5-2 1a9 9 0 004 4l1-2 5 2v4a2 2 0 01-2 2 15 15 0 01-15-15 2 2 0 012-2z"
+    />
+  </svg>
+);
+
 export const SmileIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} {...props}>
     <circle cx="12" cy="12" r="8" />
@@ -140,6 +150,12 @@ export const SparklesIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} {...props}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3z" />
     <path strokeLinecap="round" strokeLinejoin="round" d="M5 5l.7 2.1L8 7.5 6 8.4 5 10.5 4 8.4 2 7.5l2.3-.4L5 5zM19 13l.7 2.1 2.3.4-2 1-.8 2.1-.7-2.1-2.3-.4 2-1L19 13z" />
+  </svg>
+);
+
+export const MinimizeIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} {...props}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M6 12h12" />
   </svg>
 );
 
