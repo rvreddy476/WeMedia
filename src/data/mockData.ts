@@ -12,7 +12,7 @@ export const friends: Friend[] = [
   {
     id: 'f1',
     name: 'Ethan Wells',
-    handle: '@ethan.we lls',
+    handle: '@ethan.wells',
     avatarUrl: 'https://i.pravatar.cc/150?img=12',
     isOnline: true,
     recentMessage: 'Let’s sync tomorrow?'
