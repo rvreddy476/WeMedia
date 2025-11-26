@@ -12,7 +12,7 @@ interface MainLayoutProps {
 
 const MainLayout = ({ user, friends, posts, onFriendSelect }: MainLayoutProps) => {
   return (
-    <main className="mx-auto flex max-w-screen-2xl gap-4 px-3 pb-10 pt-6 sm:px-6">
+    <main className="mx-auto flex h-[calc(100vh-76px)] max-w-screen-2xl gap-3 overflow-hidden px-3 pb-6 pt-4 sm:px-5">
       <LeftSidebar user={user} />
       <FeedColumn user={user} posts={posts} />
       <RightSidebar friends={friends} onSelectFriend={(friend) => onFriendSelect?.(friend.id)} />

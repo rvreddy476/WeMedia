@@ -9,7 +9,7 @@ type FeedColumnProps = {
 
 const FeedColumn = ({ user, posts }: FeedColumnProps) => {
   return (
-    <section className="flex-1 space-y-4">
+    <section className="flex-1 space-y-3 overflow-y-auto pr-2">
       <PostComposer user={user} />
       {posts.map((post) => (
         <FeedCard key={post.id} post={post} />
