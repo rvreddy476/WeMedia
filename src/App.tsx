@@ -8,12 +8,7 @@ import PostComposerModal from './components/feed/PostComposerModal';
 import AuthPage from './components/auth/AuthPage';
 import { AuthSession, AuthUser, fetchProfile } from './api/auth';
 
-function App() {
-  const [openChatIds, setOpenChatIds] = useState<string[]>([]);
-  const [minimizedChatIds, setMinimizedChatIds] = useState<string[]>([]);
-  const [isPostComposerOpen, setIsPostComposerOpen] = useState<boolean>(false);
-  const [view, setView] = useState<'auth' | 'home'>(() => (session ? 'home' : 'auth'));
-  const [session, setSession] = useState<AuthSession | null>(() => {
+const getStoredSession = (): AuthSession | null => {
     const stored = localStorage.getItem('wemedia_auth_session');
     if (!stored) return null;
     try {
@@ -22,7 +17,14 @@ function App() {
       console.error('Failed to parse session', error);
       return null;
     }
-  });
+  }
+
+function App() {
+  const [session, setSession] = useState<AuthSession | null>(getStoredSession);
+  const [openChatIds, setOpenChatIds] = useState<string[]>([]);
+  const [minimizedChatIds, setMinimizedChatIds] = useState<string[]>([]);
+  const [isPostComposerOpen, setIsPostComposerOpen] = useState<boolean>(false);
+  const [view, setView] = useState<'auth' | 'home'>(() => (session ? 'home' : 'auth'));
   const [activeUser, setActiveUser] = useState<User>(currentUser);
   const [isRestoringSession, setIsRestoringSession] = useState<boolean>(false);
 
