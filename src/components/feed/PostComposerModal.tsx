@@ -13,7 +13,40 @@ import {
 import Avatar from '../common/Avatar';
 import { User } from '../../data/types';
 import { useMemo, useRef, useState } from 'react';
-import { emotionEmojis } from '../../data/emotionEmojis';
+
+const emojiPalette = [
+  '😀',
+  '😃',
+  '😄',
+  '😁',
+  '😆',
+  '😍',
+  '😘',
+  '😎',
+  '🤩',
+  '🤗',
+  '🤔',
+  '🤠',
+  '😴',
+  '😇',
+  '🙃',
+  '🥳',
+  '😢',
+  '😭',
+  '😡',
+  '🤯',
+  '🥰',
+  '😌',
+  '🤤',
+  '🤒',
+  '🤧',
+  '🤓',
+  '🧐',
+  '🤠',
+  '😺',
+  '😸',
+  '😻',
+];
 
 const feelings = [
   { label: 'Happy', emoji: '😊' },
@@ -144,9 +177,9 @@ const PostComposerModal = ({ user, isOpen, onClose }: PostComposerModalProps) =>
                     </button>
                     {showEmojiPicker && (
                       <div className="absolute right-0 top-14 z-10 w-52 rounded-2xl border border-slate-200 bg-white p-2 text-left shadow-xl">
-                        <div className="mb-2 text-xs font-semibold text-slate-500">Emotions</div>
+                        <div className="mb-2 text-xs font-semibold text-slate-500">Quick emoji</div>
                         <div className="grid max-h-48 grid-cols-6 gap-1 overflow-y-auto pr-1">
-                          {emotionEmojis.map((emoji) => (
+                          {emojiPalette.map((emoji) => (
                             <button
                               key={emoji}
                               className="flex h-9 w-9 items-center justify-center rounded-lg text-xl transition hover:bg-muted"
