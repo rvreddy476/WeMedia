@@ -1,40 +1,13 @@
 import { FormEvent, useMemo, useState } from 'react';
-import {
-  ArrowRightIcon,
-  ChatIcon,
-  ExploreIcon,
-  LockIcon,
-  MailIcon,
-  SparklesIcon,
-  UserIcon,
-} from '../common/Icons';
+import { ArrowRightIcon, ChatIcon, ExploreIcon, LockIcon, MailIcon, UserIcon, VideoIcon } from '../common/Icons';
 import { AuthSession, loginUser, registerUser } from '../../api/auth';
-
-const features = [
-  {
-    title: 'Create',
-    description: 'Share stories, reels, and live drops with vibrant backgrounds and quick media tools.',
-    icon: SparklesIcon,
-  },
-  {
-    title: 'Connect',
-    description: 'Keep conversations flowing with floating chat windows, calls, and reactions.',
-    icon: ChatIcon,
-  },
-  {
-    title: 'Discover',
-    description: 'Follow the people and topics you love with a curated feed and story reel.',
-    icon: ExploreIcon,
-  },
-];
 
 type AuthPageProps = {
   onAuthSuccess: (session: AuthSession) => void;
-  onBrowseAsGuest: () => void;
   isRestoring?: boolean;
 };
 
-const AuthPage = ({ onAuthSuccess, onBrowseAsGuest, isRestoring = false }: AuthPageProps) => {
+const AuthPage = ({ onAuthSuccess, isRestoring = false }: AuthPageProps) => {
   const [mode, setMode] = useState<'login' | 'register'>('register');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -80,88 +53,70 @@ const AuthPage = ({ onAuthSuccess, onBrowseAsGuest, isRestoring = false }: AuthP
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-indigo-50 text-slate-900 lg:h-screen lg:overflow-hidden">
-      <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-6 lg:h-full lg:flex-row lg:items-center lg:py-8">
-        <div className="relative w-full overflow-hidden rounded-3xl bg-slate-900 text-white shadow-2xl">
-          <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/40 via-slate-900 to-slate-900" />
-          <div className="relative space-y-8 p-8 sm:p-10 lg:p-12">
-            <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-white/90">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-indigo-50 text-slate-900">
+      <div className="mx-auto flex min-h-screen max-w-6xl flex-col gap-6 px-4 py-6 lg:flex-row lg:items-center lg:py-8">
+        <div className="relative w-full max-w-xl overflow-hidden rounded-3xl bg-slate-900 text-white shadow-2xl">
+          <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/30 via-slate-900 to-slate-900" />
+          <div className="relative space-y-6 p-8 sm:p-10">
+            <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/90">
               <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20 text-base">WM</span>
-              <span>Welcome to WeMedia</span>
+              <span>WeMedia</span>
             </div>
-            <div className="space-y-3">
-              <p className="text-lg uppercase tracking-[0.25em] text-white/60">Create · Connect · Discover</p>
-              <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">
-                Share your world with the people who matter.
-              </h1>
-              <p className="max-w-xl text-base text-white/75">
-                Craft stories, spark conversations, and explore new voices in a calm, modern workspace designed for
-                creators and communities.
+            <div className="space-y-2">
+              <p className="text-sm uppercase tracking-[0.3em] text-white/60">Create · Connect · Discover</p>
+              <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">Join the conversations you care about.</h1>
+              <p className="max-w-xl text-sm text-white/75">
+                Capture moments, chat in real time, and explore fresh stories with a streamlined experience built for everyday sharing.
               </p>
             </div>
-            <div className="grid gap-4 sm:grid-cols-3">
-              {features.map((feature) => {
-                const Icon = feature.icon;
-                return (
-                  <div
-                    key={feature.title}
-                    className="rounded-2xl border border-white/10 bg-white/5 p-4 shadow-soft backdrop-blur transition hover:-translate-y-0.5"
-                  >
-                    <div className="flex items-start gap-3">
-                      <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10">
-                        <Icon className="h-5 w-5 text-white" />
-                      </span>
-                      <div className="space-y-1">
-                        <p className="font-semibold text-white">{feature.title}</p>
-                        <p className="text-sm text-white/75">{feature.description}</p>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+            <div className="flex flex-wrap gap-3">
+              <span className="inline-flex items-center gap-2 rounded-full bg-emerald-400/15 px-3 py-2 text-sm font-semibold text-emerald-100 ring-1 ring-emerald-300/40">
+                <VideoIcon className="h-5 w-5 text-emerald-200" />
+                <span>Video</span>
+              </span>
+              <span className="inline-flex items-center gap-2 rounded-full bg-sky-400/15 px-3 py-2 text-sm font-semibold text-sky-100 ring-1 ring-sky-300/40">
+                <ChatIcon className="h-5 w-5 text-sky-100" />
+                <span>Chat</span>
+              </span>
+              <span className="inline-flex items-center gap-2 rounded-full bg-fuchsia-400/15 px-3 py-2 text-sm font-semibold text-fuchsia-100 ring-1 ring-fuchsia-300/40">
+                <ExploreIcon className="h-5 w-5 text-fuchsia-100" />
+                <span>Discover</span>
+              </span>
             </div>
-            <button
-              type="button"
-              onClick={onBrowseAsGuest}
-              className="group inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-slate-900 shadow-soft transition hover:-translate-y-0.5"
-            >
-              <span>Preview the feed</span>
-              <ArrowRightIcon className="h-4 w-4 transition group-hover:translate-x-1" />
-            </button>
           </div>
         </div>
 
         <form
-          className="w-full space-y-6 rounded-3xl border border-slate-100 bg-white p-6 shadow-soft sm:p-8"
+          className="w-full max-w-xl space-y-6 rounded-3xl border border-slate-100 bg-white p-6 shadow-soft sm:p-8"
           onSubmit={handleSubmit}
         >
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center rounded-full bg-slate-100 p-1 text-sm font-semibold text-slate-500">
               <button
-                  type="button"
-                  className={`rounded-full px-4 py-2 transition ${
-                    mode === 'login' ? 'bg-white text-slate-900 shadow-soft' : 'hover:text-slate-900'
-                  }`}
-                  onClick={() => {
-                    setMode('login');
-                    setStatus({ loading: false, error: null, success: null });
-                  }}
-                >
-                  Login
-                </button>
-                <button
-                  type="button"
-                  className={`rounded-full px-4 py-2 transition ${
-                    mode === 'register' ? 'bg-white text-slate-900 shadow-soft' : 'hover:text-slate-900'
-                  }`}
-                  onClick={() => {
-                    setMode('register');
-                    setStatus({ loading: false, error: null, success: null });
-                  }}
-                >
-                  Register
-                </button>
-              </div>
+                type="button"
+                className={`rounded-full px-4 py-2 transition ${
+                  mode === 'login' ? 'bg-white text-slate-900 shadow-soft' : 'hover:text-slate-900'
+                }`}
+                onClick={() => {
+                  setMode('login');
+                  setStatus({ loading: false, error: null, success: null });
+                }}
+              >
+                Login
+              </button>
+              <button
+                type="button"
+                className={`rounded-full px-4 py-2 transition ${
+                  mode === 'register' ? 'bg-white text-slate-900 shadow-soft' : 'hover:text-slate-900'
+                }`}
+                onClick={() => {
+                  setMode('register');
+                  setStatus({ loading: false, error: null, success: null });
+                }}
+              >
+                Register
+              </button>
+            </div>
             <span className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-400">WeMedia Access</span>
           </div>
 
@@ -287,38 +242,7 @@ const AuthPage = ({ onAuthSuccess, onBrowseAsGuest, isRestoring = false }: AuthP
               <ArrowRightIcon className="h-4 w-4" />
             </button>
 
-            <p className="text-center text-xs text-slate-500">
-              By continuing you agree to our Terms of Service and acknowledge the Privacy Policy.
-            </p>
-
-            <div className="flex items-center gap-3 text-sm text-slate-600">
-              <div className="h-px flex-1 bg-slate-200" />
-              <span>or</span>
-              <div className="h-px flex-1 bg-slate-200" />
-            </div>
-
-            <div className="grid gap-3 sm:grid-cols-2">
-              <button
-                type="button"
-                className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-soft transition hover:-translate-y-0.5"
-              >
-                Continue with Google
-              </button>
-              <button
-                type="button"
-                className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-soft transition hover:-translate-y-0.5"
-              >
-                Continue with Apple
-              </button>
-            </div>
-
-            <button
-              type="button"
-              onClick={onBrowseAsGuest}
-              className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-slate-700 shadow-soft transition hover:-translate-y-0.5"
-            >
-              Browse as guest
-            </button>
+            <p className="text-center text-xs text-slate-500">By continuing you agree to our Terms of Service and acknowledge the Privacy Policy.</p>
           </div>
         </form>
       </div>

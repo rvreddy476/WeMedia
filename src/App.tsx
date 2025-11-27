@@ -12,7 +12,7 @@ function App() {
   const [openChatIds, setOpenChatIds] = useState<string[]>([]);
   const [minimizedChatIds, setMinimizedChatIds] = useState<string[]>([]);
   const [isPostComposerOpen, setIsPostComposerOpen] = useState<boolean>(false);
-  const [view, setView] = useState<'auth' | 'home'>('auth');
+  const [view, setView] = useState<'auth' | 'home'>(() => (session ? 'home' : 'auth'));
   const [session, setSession] = useState<AuthSession | null>(() => {
     const stored = localStorage.getItem('wemedia_auth_session');
     if (!stored) return null;
@@ -123,13 +123,8 @@ function App() {
     setSession(authSession);
   };
 
-  const handleGuestBrowse = () => {
-    setSession(null);
-    setView('home');
-  };
-
   if (view === 'auth') {
-    return <AuthPage onAuthSuccess={handleAuthSuccess} onBrowseAsGuest={handleGuestBrowse} isRestoring={isRestoringSession} />;
+    return <AuthPage onAuthSuccess={handleAuthSuccess} isRestoring={isRestoringSession} />;
   }
 
   return (
