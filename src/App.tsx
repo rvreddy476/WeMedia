@@ -3,15 +3,28 @@ import Header from './components/layout/Header';
 import MainLayout from './components/layout/MainLayout';
 import ChatWindowsBar from './components/chat/ChatWindowsBar';
 import { chatMessages, currentUser, friends, posts, stories } from './data/mockData';
-import { Friend } from './data/types';
+import { Friend, User } from './data/types';
 import PostComposerModal from './components/feed/PostComposerModal';
 import AuthPage from './components/auth/AuthPage';
+import { AuthSession, AuthUser, fetchProfile } from './api/auth';
 
 function App() {
   const [openChatIds, setOpenChatIds] = useState<string[]>([]);
   const [minimizedChatIds, setMinimizedChatIds] = useState<string[]>([]);
   const [isPostComposerOpen, setIsPostComposerOpen] = useState<boolean>(false);
   const [view, setView] = useState<'auth' | 'home'>('auth');
+  const [session, setSession] = useState<AuthSession | null>(() => {
+    const stored = localStorage.getItem('wemedia_auth_session');
+    if (!stored) return null;
+    try {
+      return JSON.parse(stored) as AuthSession;
+    } catch (error) {
+      console.error('Failed to parse session', error);
+      return null;
+    }
+  });
+  const [activeUser, setActiveUser] = useState<User>(currentUser);
+  const [isRestoringSession, setIsRestoringSession] = useState<boolean>(false);
 
   useEffect(() => {
     if (view === 'auth') {
@@ -20,6 +33,62 @@ function App() {
       setIsPostComposerOpen(false);
     }
   }, [view]);
+
+  useEffect(() => {
+    if (session) {
+      localStorage.setItem('wemedia_auth_session', JSON.stringify(session));
+    } else {
+      localStorage.removeItem('wemedia_auth_session');
+    }
+  }, [session]);
+
+  useEffect(() => {
+    const normalizeUser = (user: AuthUser): User => {
+      const name = `${user.firstName ?? ''} ${user.lastName ?? ''}`.trim() || 'WeMedia Member';
+      const handle = user.handle || `@${(user.firstName || 'member').toLowerCase()}.${(user.lastName || 'community').toLowerCase()}`;
+      return {
+        id: user.id,
+        name,
+        handle,
+        avatarUrl:
+          user.avatarUrl ||
+          `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=0f172a&color=ffffff`,
+        title: 'Member',
+      };
+    };
+
+    if (session) {
+      setActiveUser(normalizeUser(session.user));
+      setView('home');
+      return;
+    }
+
+    setActiveUser(currentUser);
+    setView('auth');
+  }, [session]);
+
+  useEffect(() => {
+    if (!session?.tokens?.accessToken) return;
+    let isMounted = true;
+    setIsRestoringSession(true);
+
+    fetchProfile(session.tokens.accessToken)
+      .then((profile) => {
+        if (!isMounted) return;
+        setSession((prev) => (prev ? { ...prev, user: profile } : prev));
+      })
+      .catch(() => {
+        if (!isMounted) return;
+        setSession(null);
+      })
+      .finally(() => {
+        if (isMounted) setIsRestoringSession(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [session?.tokens?.accessToken]);
 
   const openChatFriends: Friend[] = useMemo(
     () =>
@@ -50,19 +119,31 @@ function App() {
     );
   };
 
+  const handleAuthSuccess = (authSession: AuthSession) => {
+    setSession(authSession);
+  };
+
+  const handleGuestBrowse = () => {
+    setSession(null);
+    setView('home');
+  };
+
   if (view === 'auth') {
-    return <AuthPage onEnterApp={() => setView('home')} />;
+    return <AuthPage onAuthSuccess={handleAuthSuccess} onBrowseAsGuest={handleGuestBrowse} isRestoring={isRestoringSession} />;
   }
 
   return (
     <div className="min-h-screen bg-background text-slate-900">
       <Header
-        user={currentUser}
+        user={activeUser}
         onOpenComposer={() => setIsPostComposerOpen(true)}
-        onOpenAuth={() => setView('auth')}
+        onOpenAuth={() => {
+          setSession(null);
+          setView('auth');
+        }}
       />
       <MainLayout
-        user={currentUser}
+        user={activeUser}
         friends={friends}
         posts={posts}
         stories={stories}
@@ -76,7 +157,7 @@ function App() {
         onToggleMinimize={handleToggleMinimize}
         onOpenDefaultChat={() => (friends[0] ? handleOpenChat(friends[0].id) : null)}
       />
-      <PostComposerModal user={currentUser} isOpen={isPostComposerOpen} onClose={() => setIsPostComposerOpen(false)} />
+      <PostComposerModal user={activeUser} isOpen={isPostComposerOpen} onClose={() => setIsPostComposerOpen(false)} />
     </div>
   );
 }

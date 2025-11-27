@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { FormEvent, useMemo, useState } from 'react';
 import {
   ArrowRightIcon,
   ChatIcon,
@@ -8,6 +8,7 @@ import {
   SparklesIcon,
   UserIcon,
 } from '../common/Icons';
+import { AuthSession, loginUser, registerUser } from '../../api/auth';
 
 const features = [
   {
@@ -28,12 +29,55 @@ const features = [
 ];
 
 type AuthPageProps = {
-  onEnterApp: () => void;
+  onAuthSuccess: (session: AuthSession) => void;
+  onBrowseAsGuest: () => void;
+  isRestoring?: boolean;
 };
 
-const AuthPage = ({ onEnterApp }: AuthPageProps) => {
+const AuthPage = ({ onAuthSuccess, onBrowseAsGuest, isRestoring = false }: AuthPageProps) => {
   const [mode, setMode] = useState<'login' | 'register'>('register');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [gender, setGender] = useState('');
+  const [dateOfBirth, setDateOfBirth] = useState('');
+  const [contact, setContact] = useState('');
+  const [password, setPassword] = useState('');
+  const [status, setStatus] = useState<{ loading: boolean; error: string | null; success: string | null }>({
+    loading: false,
+    error: null,
+    success: null,
+  });
   const ctaLabel = useMemo(() => (mode === 'login' ? 'Log in' : 'Create account'), [mode]);
+  const canSubmit = useMemo(() => {
+    if (status.loading) return false;
+    if (!contact || !password) return false;
+    if (mode === 'register' && (!firstName || !lastName || !gender || !dateOfBirth)) return false;
+    return true;
+  }, [contact, password, mode, firstName, lastName, gender, dateOfBirth, status.loading]);
+
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+    setStatus({ loading: true, error: null, success: null });
+
+    try {
+      const session =
+        mode === 'login'
+          ? await loginUser({ identifier: contact.trim(), password })
+          : await registerUser({
+              firstName: firstName.trim(),
+              lastName: lastName.trim(),
+              gender,
+              dateOfBirth,
+              contact: contact.trim(),
+              password,
+            });
+
+      setStatus({ loading: false, error: null, success: mode === 'login' ? 'Welcome back!' : 'Account created' });
+      onAuthSuccess(session);
+    } catch (error) {
+      setStatus({ loading: false, error: (error as Error)?.message || 'Unable to complete request', success: null });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-indigo-50 text-slate-900 lg:h-screen lg:overflow-hidden">
@@ -78,7 +122,7 @@ const AuthPage = ({ onEnterApp }: AuthPageProps) => {
             </div>
             <button
               type="button"
-              onClick={onEnterApp}
+              onClick={onBrowseAsGuest}
               className="group inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-slate-900 shadow-soft transition hover:-translate-y-0.5"
             >
               <span>Preview the feed</span>
@@ -87,28 +131,45 @@ const AuthPage = ({ onEnterApp }: AuthPageProps) => {
           </div>
         </div>
 
-        <div className="w-full space-y-6 rounded-3xl border border-slate-100 bg-white p-6 shadow-soft sm:p-8">
+        <form
+          className="w-full space-y-6 rounded-3xl border border-slate-100 bg-white p-6 shadow-soft sm:p-8"
+          onSubmit={handleSubmit}
+        >
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center rounded-full bg-slate-100 p-1 text-sm font-semibold text-slate-500">
               <button
-                className={`rounded-full px-4 py-2 transition ${
-                  mode === 'login' ? 'bg-white text-slate-900 shadow-soft' : 'hover:text-slate-900'
-                }`}
-                onClick={() => setMode('login')}
-              >
-                Login
-              </button>
-              <button
-                className={`rounded-full px-4 py-2 transition ${
-                  mode === 'register' ? 'bg-white text-slate-900 shadow-soft' : 'hover:text-slate-900'
-                }`}
-                onClick={() => setMode('register')}
-              >
-                Register
-              </button>
-            </div>
+                  type="button"
+                  className={`rounded-full px-4 py-2 transition ${
+                    mode === 'login' ? 'bg-white text-slate-900 shadow-soft' : 'hover:text-slate-900'
+                  }`}
+                  onClick={() => {
+                    setMode('login');
+                    setStatus({ loading: false, error: null, success: null });
+                  }}
+                >
+                  Login
+                </button>
+                <button
+                  type="button"
+                  className={`rounded-full px-4 py-2 transition ${
+                    mode === 'register' ? 'bg-white text-slate-900 shadow-soft' : 'hover:text-slate-900'
+                  }`}
+                  onClick={() => {
+                    setMode('register');
+                    setStatus({ loading: false, error: null, success: null });
+                  }}
+                >
+                  Register
+                </button>
+              </div>
             <span className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-400">WeMedia Access</span>
           </div>
+
+          {isRestoring && (
+            <div className="rounded-xl border border-amber-100 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-800">
+              Restoring your session...
+            </div>
+          )}
 
           <div className="space-y-4">
             {mode === 'register' && (
@@ -118,6 +179,8 @@ const AuthPage = ({ onEnterApp }: AuthPageProps) => {
                   <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 focus-within:border-slate-400">
                     <UserIcon className="h-5 w-5 text-slate-400" />
                     <input
+                      value={firstName}
+                      onChange={(event) => setFirstName(event.target.value)}
                       className="w-full border-none bg-transparent text-sm outline-none"
                       placeholder="First name"
                       aria-label="First name"
@@ -126,6 +189,8 @@ const AuthPage = ({ onEnterApp }: AuthPageProps) => {
                   <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 focus-within:border-slate-400">
                     <UserIcon className="h-5 w-5 text-slate-400" />
                     <input
+                      value={lastName}
+                      onChange={(event) => setLastName(event.target.value)}
                       className="w-full border-none bg-transparent text-sm outline-none"
                       placeholder="Last name"
                       aria-label="Last name"
@@ -137,7 +202,8 @@ const AuthPage = ({ onEnterApp }: AuthPageProps) => {
                     <label className="text-sm font-semibold text-slate-700">Gender</label>
                     <select
                       className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-medium text-slate-700 outline-none focus:border-slate-400"
-                      defaultValue=""
+                      value={gender}
+                      onChange={(event) => setGender(event.target.value)}
                       aria-label="Gender"
                     >
                       <option value="" disabled>
@@ -154,6 +220,8 @@ const AuthPage = ({ onEnterApp }: AuthPageProps) => {
                     <input
                       type="date"
                       className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-medium text-slate-700 outline-none focus:border-slate-400"
+                      value={dateOfBirth}
+                      onChange={(event) => setDateOfBirth(event.target.value)}
                       aria-label="Date of birth"
                     />
                   </div>
@@ -166,6 +234,8 @@ const AuthPage = ({ onEnterApp }: AuthPageProps) => {
               <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 focus-within:border-slate-400">
                 <MailIcon className="h-5 w-5 text-slate-400" />
                 <input
+                  value={contact}
+                  onChange={(event) => setContact(event.target.value)}
                   className="w-full border-none bg-transparent text-sm outline-none"
                   placeholder="you@example.com or +1 (555) 123-4567"
                   aria-label="Email or phone number"
@@ -176,12 +246,18 @@ const AuthPage = ({ onEnterApp }: AuthPageProps) => {
             <div className="space-y-3">
               <div className="flex items-center justify-between text-sm font-semibold text-slate-700">
                 <label>Password</label>
-                {mode === 'login' && <button className="text-indigo-600 hover:underline">Forgot?</button>}
+                {mode === 'login' && (
+                  <button type="button" className="text-indigo-600 hover:underline">
+                    Forgot?
+                  </button>
+                )}
               </div>
               <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 focus-within:border-slate-400">
                 <LockIcon className="h-5 w-5 text-slate-400" />
                 <input
                   type="password"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
                   className="w-full border-none bg-transparent text-sm outline-none"
                   placeholder="••••••••"
                   aria-label="Password"
@@ -189,11 +265,25 @@ const AuthPage = ({ onEnterApp }: AuthPageProps) => {
               </div>
             </div>
 
+            {status.error && (
+              <div className="rounded-xl border border-red-100 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
+                {status.error}
+              </div>
+            )}
+            {status.success && (
+              <div className="rounded-xl border border-emerald-100 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-700">
+                {status.success}
+              </div>
+            )}
+
             <button
-              type="button"
-              className="flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white shadow-soft transition hover:-translate-y-0.5 hover:bg-slate-800"
+              type="submit"
+              disabled={!canSubmit || isRestoring}
+              className={`flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-white shadow-soft transition hover:-translate-y-0.5 ${
+                canSubmit && !isRestoring ? 'bg-slate-900 hover:bg-slate-800' : 'cursor-not-allowed bg-slate-300 text-slate-600'
+              }`}
             >
-              {ctaLabel}
+              {status.loading ? 'Processing...' : ctaLabel}
               <ArrowRightIcon className="h-4 w-4" />
             </button>
 
@@ -208,23 +298,29 @@ const AuthPage = ({ onEnterApp }: AuthPageProps) => {
             </div>
 
             <div className="grid gap-3 sm:grid-cols-2">
-              <button className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-soft transition hover:-translate-y-0.5">
+              <button
+                type="button"
+                className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-soft transition hover:-translate-y-0.5"
+              >
                 Continue with Google
               </button>
-              <button className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-soft transition hover:-translate-y-0.5">
+              <button
+                type="button"
+                className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-soft transition hover:-translate-y-0.5"
+              >
                 Continue with Apple
               </button>
             </div>
 
             <button
               type="button"
-              onClick={onEnterApp}
+              onClick={onBrowseAsGuest}
               className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2 text-sm font-semibold text-slate-700 shadow-soft transition hover:-translate-y-0.5"
             >
               Browse as guest
             </button>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );
