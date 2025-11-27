@@ -5,9 +5,10 @@ import { User } from '../../data/types';
 type HeaderProps = {
   user: User;
   onOpenComposer: () => void;
+  onOpenAuth?: () => void;
 };
 
-const Header = ({ user, onOpenComposer }: HeaderProps) => {
+const Header = ({ user, onOpenComposer, onOpenAuth }: HeaderProps) => {
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/80 backdrop-blur">
       <div className="mx-auto flex max-w-screen-2xl items-center justify-between px-6 py-4">
@@ -58,6 +59,14 @@ const Header = ({ user, onOpenComposer }: HeaderProps) => {
         </div>
 
         <div className="flex items-center gap-4">
+          {onOpenAuth && (
+            <button
+              className="hidden rounded-full border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-700 shadow-soft transition hover:-translate-y-0.5 sm:inline-flex"
+              onClick={onOpenAuth}
+            >
+              Login / Register
+            </button>
+          )}
           <button
             className="relative rounded-full border border-slate-200 bg-white p-2 shadow-soft transition hover:-translate-y-0.5"
             title="Notifications"

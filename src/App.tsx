@@ -1,15 +1,25 @@
+import { useEffect, useMemo, useState } from 'react';
 import Header from './components/layout/Header';
 import MainLayout from './components/layout/MainLayout';
 import ChatWindowsBar from './components/chat/ChatWindowsBar';
 import { chatMessages, currentUser, friends, posts, stories } from './data/mockData';
-import { useMemo, useState } from 'react';
 import { Friend } from './data/types';
 import PostComposerModal from './components/feed/PostComposerModal';
+import AuthPage from './components/auth/AuthPage';
 
 function App() {
   const [openChatIds, setOpenChatIds] = useState<string[]>([]);
   const [minimizedChatIds, setMinimizedChatIds] = useState<string[]>([]);
   const [isPostComposerOpen, setIsPostComposerOpen] = useState<boolean>(false);
+  const [view, setView] = useState<'auth' | 'home'>('auth');
+
+  useEffect(() => {
+    if (view === 'auth') {
+      setOpenChatIds([]);
+      setMinimizedChatIds([]);
+      setIsPostComposerOpen(false);
+    }
+  }, [view]);
 
   const openChatFriends: Friend[] = useMemo(
     () =>
@@ -40,9 +50,17 @@ function App() {
     );
   };
 
+  if (view === 'auth') {
+    return <AuthPage onEnterApp={() => setView('home')} />;
+  }
+
   return (
     <div className="min-h-screen bg-background text-slate-900">
-      <Header user={currentUser} onOpenComposer={() => setIsPostComposerOpen(true)} />
+      <Header
+        user={currentUser}
+        onOpenComposer={() => setIsPostComposerOpen(true)}
+        onOpenAuth={() => setView('auth')}
+      />
       <MainLayout
         user={currentUser}
         friends={friends}
