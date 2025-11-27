@@ -56,32 +56,49 @@ const AuthPage = ({ onAuthSuccess, isRestoring = false }: AuthPageProps) => {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-indigo-50 text-slate-900">
       <div className="mx-auto flex min-h-screen max-w-6xl flex-col gap-6 px-4 py-6 lg:flex-row lg:items-center lg:py-8">
         <div className="relative w-full max-w-xl overflow-hidden rounded-3xl bg-slate-900 text-white shadow-2xl">
-          <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/30 via-slate-900 to-slate-900" />
+          <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/25 via-slate-900 to-slate-900" />
+          <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-indigo-400/10 blur-3xl" />
+          <div className="absolute -bottom-14 -left-8 h-36 w-36 rounded-full bg-sky-300/10 blur-3xl" />
           <div className="relative space-y-6 p-8 sm:p-10">
             <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/90">
               <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20 text-base">WM</span>
               <span>WeMedia</span>
             </div>
-            <div className="space-y-2">
+            <div className="space-y-3">
               <p className="text-sm uppercase tracking-[0.3em] text-white/60">Create · Connect · Discover</p>
-              <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">Join the conversations you care about.</h1>
+              <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">A calmer way to share what matters.</h1>
               <p className="max-w-xl text-sm text-white/75">
-                Capture moments, chat in real time, and explore fresh stories with a streamlined experience built for everyday sharing.
+                Build your space in seconds—drop a post, jump into a chat, or follow new stories with an uncluttered flow that keeps you close to the people you care about.
               </p>
             </div>
-            <div className="flex flex-wrap gap-3">
-              <span className="inline-flex items-center gap-2 rounded-full bg-emerald-400/15 px-3 py-2 text-sm font-semibold text-emerald-100 ring-1 ring-emerald-300/40">
-                <VideoIcon className="h-5 w-5 text-emerald-200" />
-                <span>Video</span>
-              </span>
-              <span className="inline-flex items-center gap-2 rounded-full bg-sky-400/15 px-3 py-2 text-sm font-semibold text-sky-100 ring-1 ring-sky-300/40">
-                <ChatIcon className="h-5 w-5 text-sky-100" />
-                <span>Chat</span>
-              </span>
-              <span className="inline-flex items-center gap-2 rounded-full bg-fuchsia-400/15 px-3 py-2 text-sm font-semibold text-fuchsia-100 ring-1 ring-fuchsia-300/40">
-                <ExploreIcon className="h-5 w-5 text-fuchsia-100" />
-                <span>Discover</span>
-              </span>
+            <div className="grid gap-3 sm:grid-cols-3">
+              <div className="flex flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 p-4 shadow-lg shadow-black/10 backdrop-blur">
+                <div className="flex items-center gap-2 text-sm font-semibold text-emerald-50">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-emerald-400/20 ring-1 ring-emerald-300/50">
+                    <VideoIcon className="h-5 w-5" />
+                  </span>
+                  Create
+                </div>
+                <p className="text-xs text-white/70">Go live, post highlights, and add reels without the noise.</p>
+              </div>
+              <div className="flex flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 p-4 shadow-lg shadow-black/10 backdrop-blur">
+                <div className="flex items-center gap-2 text-sm font-semibold text-sky-50">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-sky-400/20 ring-1 ring-sky-300/50">
+                    <ChatIcon className="h-5 w-5" />
+                  </span>
+                  Connect
+                </div>
+                <p className="text-xs text-white/70">Pop open floating chats, share reactions, and keep replies close.</p>
+              </div>
+              <div className="flex flex-col gap-2 rounded-2xl border border-white/10 bg-white/5 p-4 shadow-lg shadow-black/10 backdrop-blur">
+                <div className="flex items-center gap-2 text-sm font-semibold text-fuchsia-50">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-fuchsia-400/20 ring-1 ring-fuchsia-300/50">
+                    <ExploreIcon className="h-5 w-5" />
+                  </span>
+                  Discover
+                </div>
+                <p className="text-xs text-white/70">Swipe through stories, reels, and topics tailored to you.</p>
+              </div>
             </div>
           </div>
         </div>
