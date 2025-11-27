@@ -45,6 +45,15 @@ a {
   animation: chat-slide-up 220ms ease-out;
 }
 
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 @keyframes chat-slide-up {
   0% {
     opacity: 0;
