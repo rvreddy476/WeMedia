@@ -33,13 +33,11 @@ type AuthPageProps = {
 
 const AuthPage = ({ onEnterApp }: AuthPageProps) => {
   const [mode, setMode] = useState<'login' | 'register'>('register');
-  const [interest, setInterest] = useState('creator');
-
   const ctaLabel = useMemo(() => (mode === 'login' ? 'Log in' : 'Create account'), [mode]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-indigo-50 text-slate-900">
-      <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-10 lg:flex-row lg:items-center lg:py-14">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-indigo-50 text-slate-900 lg:h-screen lg:overflow-hidden">
+      <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-6 lg:h-full lg:flex-row lg:items-center lg:py-8">
         <div className="relative w-full overflow-hidden rounded-3xl bg-slate-900 text-white shadow-2xl">
           <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/40 via-slate-900 to-slate-900" />
           <div className="relative space-y-8 p-8 sm:p-10 lg:p-12">
@@ -115,36 +113,62 @@ const AuthPage = ({ onEnterApp }: AuthPageProps) => {
           <div className="space-y-4">
             {mode === 'register' && (
               <div className="space-y-3">
-                <label className="text-sm font-semibold text-slate-700">Full name</label>
-                <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 focus-within:border-slate-400">
-                  <UserIcon className="h-5 w-5 text-slate-400" />
-                  <input
-                    className="w-full border-none bg-transparent text-sm outline-none"
-                    placeholder="Alex Morgan"
-                    aria-label="Full name"
-                  />
+                <label className="text-sm font-semibold text-slate-700">Name</label>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 focus-within:border-slate-400">
+                    <UserIcon className="h-5 w-5 text-slate-400" />
+                    <input
+                      className="w-full border-none bg-transparent text-sm outline-none"
+                      placeholder="First name"
+                      aria-label="First name"
+                    />
+                  </div>
+                  <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 focus-within:border-slate-400">
+                    <UserIcon className="h-5 w-5 text-slate-400" />
+                    <input
+                      className="w-full border-none bg-transparent text-sm outline-none"
+                      placeholder="Last name"
+                      aria-label="Last name"
+                    />
+                  </div>
                 </div>
-                <label className="text-sm font-semibold text-slate-700">Choose your handle</label>
-                <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 focus-within:border-slate-400">
-                  <SparklesIcon className="h-5 w-5 text-slate-400" />
-                  <input
-                    className="w-full border-none bg-transparent text-sm outline-none"
-                    placeholder="@wecreator"
-                    aria-label="Handle"
-                  />
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div className="space-y-2">
+                    <label className="text-sm font-semibold text-slate-700">Gender</label>
+                    <select
+                      className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-medium text-slate-700 outline-none focus:border-slate-400"
+                      defaultValue=""
+                      aria-label="Gender"
+                    >
+                      <option value="" disabled>
+                        Select gender
+                      </option>
+                      <option value="female">Female</option>
+                      <option value="male">Male</option>
+                      <option value="nonbinary">Non-binary</option>
+                      <option value="prefer-not">Prefer not to say</option>
+                    </select>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-semibold text-slate-700">Date of birth</label>
+                    <input
+                      type="date"
+                      className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-medium text-slate-700 outline-none focus:border-slate-400"
+                      aria-label="Date of birth"
+                    />
+                  </div>
                 </div>
               </div>
             )}
 
             <div className="space-y-3">
-              <label className="text-sm font-semibold text-slate-700">Email</label>
+              <label className="text-sm font-semibold text-slate-700">Email or phone number</label>
               <div className="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 focus-within:border-slate-400">
                 <MailIcon className="h-5 w-5 text-slate-400" />
                 <input
-                  type="email"
                   className="w-full border-none bg-transparent text-sm outline-none"
-                  placeholder="you@example.com"
-                  aria-label="Email"
+                  placeholder="you@example.com or +1 (555) 123-4567"
+                  aria-label="Email or phone number"
                 />
               </div>
             </div>
@@ -164,32 +188,6 @@ const AuthPage = ({ onEnterApp }: AuthPageProps) => {
                 />
               </div>
             </div>
-
-            {mode === 'register' && (
-              <div className="space-y-3">
-                <label className="text-sm font-semibold text-slate-700">What brings you here?</label>
-                <div className="grid gap-2 sm:grid-cols-3">
-                  {[
-                    { id: 'creator', label: 'Create' },
-                    { id: 'connect', label: 'Connect' },
-                    { id: 'discover', label: 'Discover' },
-                  ].map((item) => (
-                    <button
-                      key={item.id}
-                      type="button"
-                      onClick={() => setInterest(item.id)}
-                      className={`flex items-center justify-center rounded-xl border px-3 py-3 text-sm font-semibold transition ${
-                        interest === item.id
-                          ? 'border-indigo-500 bg-indigo-50 text-indigo-700 shadow-soft'
-                          : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-slate-300'
-                      }`}
-                    >
-                      {item.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
 
             <button
               type="button"
