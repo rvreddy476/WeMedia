@@ -59,14 +59,19 @@ function App() {
       };
     };
 
-    if (session) {
-      setActiveUser(normalizeUser(session.user));
-      setView('home');
+    if (!session) {
+      setActiveUser(currentUser);
+      setView('auth');
       return;
     }
 
-    setActiveUser(currentUser);
-    setView('auth');
+    if (session.user) {
+      setActiveUser(normalizeUser(session.user));
+    } else {
+      setActiveUser(currentUser);
+    }
+
+    setView('home');
   }, [session]);
 
   useEffect(() => {
