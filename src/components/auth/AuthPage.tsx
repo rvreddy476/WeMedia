@@ -8,7 +8,7 @@ type AuthPageProps = {
 };
 
 const AuthPage = ({ onAuthSuccess, isRestoring = false }: AuthPageProps) => {
-  const [mode, setMode] = useState<'login' | 'register'>('register');
+  const [mode, setMode] = useState<'login' | 'register'>('login');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [gender, setGender] = useState('');
@@ -258,6 +258,22 @@ const AuthPage = ({ onAuthSuccess, isRestoring = false }: AuthPageProps) => {
               {status.loading ? 'Processing...' : ctaLabel}
               <ArrowRightIcon className="h-4 w-4" />
             </button>
+
+            {mode === 'login' && (
+              <p className="text-center text-xs font-semibold text-slate-600">
+                Don\'t have an account?{' '}
+                <button
+                  type="button"
+                  className="text-indigo-600 hover:underline"
+                  onClick={() => {
+                    setMode('register');
+                    setStatus({ loading: false, error: null, success: null });
+                  }}
+                >
+                  Sign Up
+                </button>
+              </p>
+            )}
 
             <p className="text-center text-xs text-slate-500">By continuing you agree to our Terms of Service and acknowledge the Privacy Policy.</p>
           </div>
